@@ -21,3 +21,12 @@ all:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 	rm -rf ../build/*
+
+install:
+	sudo insmod ../build/492.ko 
+
+checkLog:
+	sudo less +G /var/log/kernel.log
+
+uninstall:
+	sudo rmmod ../build/492.ko
