@@ -15,7 +15,6 @@ while True:
     if(selection == 0):
         # git pull
         os.system("git pull")
-        input("Press ENTER to continue")
 
     elif(selection == 1):
         # make module
@@ -51,5 +50,9 @@ while True:
 
     elif(selection == -1):
         exit(0)
+
+    print("--------------------------------------------")
+    input("Press ENTER to continue")
+
     else:
         continue
