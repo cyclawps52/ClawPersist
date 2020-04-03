@@ -1,4 +1,5 @@
-obj-m += main.o
+obj-m += csc492.o
+csc492-objs := main.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
@@ -11,7 +12,7 @@ all:
 	rm .main.o.cmd
 
 	# move all pieces to build folder
-	mv main.ko ../build/492.ko
+	mv main.ko ../build/csc492.ko
 	mv main.mod.c ../build
 	mv main.mod.o ../build
 	mv main.o ../build
@@ -26,7 +27,7 @@ install:
 	sudo insmod ../build/492.ko 
 
 checkLog:
-	sudo less +G /var/log/kernel.log
+	sudo less +G /var/log/kern.log
 
 uninstall:
-	sudo rmmod ../build/492.ko
+	sudo rmmod csc492
