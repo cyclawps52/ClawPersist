@@ -5,23 +5,23 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev5");
+MODULE_VERSION("beta-rev6");
 
 
 // parameter callbackIP
 static char *callbackIP = "127.0.0.1"; 
-module_param(callbackIP, charp, 0644);
+module_param(callbackIP, charp, S_IRUSR|S_IWUSR|S_IXUSR);
 MODULE_PARM_DESC(callbackIP, "Currently a placeholder for a future callback IP");
 
 // parameter testInt
 static int testInt = 0;
-module_param(testInt, int, 0777);
+module_param(testInt, int, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP|S_IROTH|S_IWOTH|S_IXOTH);
 MODULE_PARM_DESC(testInt, "a dummy integer used for testing file permissions");
 
 // parameter testArray
 static int testArray[2] = {0};
 static int testArray_c = 0;
-module_param_array(testArray, int, &testArray_c, 0644);
+module_param_array(testArray, int, &testArray_c, 0000);
 MODULE_PARM_DESC(testArray, "a dummy array used for testing file permissions");
 
 int initModule(void){
