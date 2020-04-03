@@ -5,13 +5,13 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev0");
+MODULE_VERSION("beta-rev1");
 
 
 // parameter callbackIP
 static char *callbackIP = "127.0.0.1"; 
 module_param(callbackIP, charp, S_IRUGO);
-MODULE_PARAM_DESC(callbackIP, "Currently a placeholder for a future callback IP");
+MODULE_PARM_DESC(callbackIP, "Currently a placeholder for a future callback IP");
 
 int initModule(void){
     printk(KERN_INFO, "[CSC492] Hello world!\n");
