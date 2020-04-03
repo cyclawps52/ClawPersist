@@ -40,9 +40,19 @@ while True:
         if(callbackIP == ""):
             # content not entered, set to default
             callbackIP = "127.0.0.1"
+
+        # testInt
+        testInt = str(input("testInt: "))
+        if(testInt == ""):
+            testInt = str(52)
+
+        # testArray
+        testArray = str(input("testArray:"))
+        if(testArray == ""):
+            testArray = "{0}"
         
         # run the actual insmod command
-        os.system("sudo insmod ../build/csc492.ko callbackIP={0}".format(callbackIP))
+        os.system("sudo insmod ../build/csc492.ko callbackIP={0} testInt={1} testArray={2}".format(callbackIP, str(testInt), testArray))
 
     elif(selection == 4):
         # check module log
