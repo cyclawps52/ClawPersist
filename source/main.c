@@ -5,7 +5,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev7");
+MODULE_VERSION("beta-rev8");
 
 
 // parameter callbackIP
@@ -31,7 +31,7 @@ int initModule(void){
 
     // testing file permission and modification
     printk(KERN_INFO "[CSC492] DUMMY: testInt has a value of %d\n", testInt);
-    for(i=0; i<testArray_c; i++){
+    for(i=0; i<sizeof(testArray / sizeof(int)); i++){
         printk(KERN_INFO "[CSC492] DUMMY: testArray[%d] has value %d\n", i, testArray[i]);
     }
 
