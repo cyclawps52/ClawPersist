@@ -10,7 +10,7 @@ all:
 	rm .csc492.ko.cmd
 	rm .csc492.mod.o.cmd
 	rm .csc492.o.cmd
-	rm .csc492.mod.c
+	rm csc492.mod.c
 	rm csc492.mod.o 
 	rm main.o 
 	rm Module.symvers 
