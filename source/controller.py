@@ -12,6 +12,8 @@ while True:
     print("-1. Exit controller")
     selection = int(input("Select an option: "))
 
+    print("--------------------------------------------")
+
     if(selection == 0):
         # git pull
         os.system("git pull")
