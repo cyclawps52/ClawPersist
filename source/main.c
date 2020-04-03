@@ -5,7 +5,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("testing-01");
+MODULE_VERSION("alpha-rev0");
 
 
 int initModule(void){
