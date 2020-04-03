@@ -7,17 +7,17 @@ all:
 	# cleanup local folder
 	rm -rf .tmp_versions
 	rm .cache.mk 
-	rm .main.ko.cmd
-	rm .main.mod.o.cmd
-	rm .main.o.cmd
+	rm .csc492.ko.cmd
+	rm .csc492.mod.o.cmd
+	rm .csc492.o.cmd
+	rm .csc492.mod.c
+	rm csc492.mod.o 
+	rm main.o 
+	rm Module.symvers 
+	rm modules.order
 
-	# move all pieces to build folder
-	mv main.ko ../build/csc492.ko
-	mv main.mod.c ../build
-	mv main.mod.o ../build
-	mv main.o ../build
-	mv Module.symvers ../build
-	mv modules.order ../build
+	# move final module to build folder
+	mv csc492.ko ../build
 
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
