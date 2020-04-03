@@ -1,9 +1,6 @@
 obj-m += csc492.o
 csc492-objs := main.o
 
-%:
-    @:
-	
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
@@ -28,7 +25,7 @@ clean:
 	rm -rf ../build/*
 
 install:
-	sudo insmod ../build/csc492.ko $(filter-out $@,$(MAKECMDGOALS))
+	sudo insmod ../build/csc492.ko 
 
 checkLog:
 	sudo less +G /var/log/kern.log
