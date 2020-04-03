@@ -5,7 +5,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev1");
+MODULE_VERSION("beta-rev2");
 
 
 // parameter callbackIP
@@ -15,7 +15,7 @@ MODULE_PARM_DESC(callbackIP, "Currently a placeholder for a future callback IP")
 
 int initModule(void){
     printk(KERN_INFO, "[CSC492] Hello world!\n");
-    printk(KERN_INFO, "[CSC492] DEBUG: Callback IP set to %s\n", callbackIP);
+    //printk(KERN_INFO, "[CSC492] DEBUG: Callback IP set to %s\n", callbackIP);
 
     return 0;
 }
