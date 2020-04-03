@@ -18,7 +18,11 @@ while True:
     if(selection == 0):
         # git pull
         os.system("git pull")
-        os.execl(sys.executable, sys.executable, * sys.argv) # restart current script in case controller was updated in pull
+
+        # restart current script in case controller was updated in pull
+        print("--------------------------------------------")
+        input("Press ENTER to reload controller")
+        os.execl(sys.executable, sys.executable, * sys.argv) 
 
     elif(selection == 1):
         # make module
