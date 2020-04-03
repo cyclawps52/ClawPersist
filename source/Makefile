@@ -24,7 +24,7 @@ clean:
 	rm -rf ../build/*
 
 install:
-	sudo insmod ../build/492.ko 
+	sudo insmod ../build/csc492.ko 
 
 checkLog:
 	sudo less +G /var/log/kern.log
