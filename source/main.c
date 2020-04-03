@@ -31,7 +31,7 @@ int initModule(void){
 
     // testing file permission and modification
     printk(KERN_INFO "[CSC492] DUMMY: testInt has a value of %d\n", testInt);
-    for(i=0; i<sizeof(testArray / sizeof(int)); i++){
+    for(i=0; i<(sizeof(testArray) / sizeof(int)); i++){
         printk(KERN_INFO "[CSC492] DUMMY: testArray[%d] has value %d\n", i, testArray[i]);
     }
 
