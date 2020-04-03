@@ -2,7 +2,7 @@ obj-m += csc492.o
 csc492-objs := main.o
 
 
-all:
+all: clean
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 
 	# cleanup local folder

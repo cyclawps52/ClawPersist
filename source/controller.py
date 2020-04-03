@@ -1,17 +1,31 @@
 import os
 
 while True:
-    print("0. Install module - default options")
-    print("1. Install module - specify options")
-    print("2. Check module log")
-    print("3. Uninstall module")
+    os.system("clear")
+    print("0. git pull")
+    print("1. make")
+    print("2. make install - default options")
+    print("3. make install - specify options")
+    print("4. make checkLog")
+    print("5. make uninstall")
+    print("6. make clean")
     print("-1. Exit controller")
     selection = int(input("Select an option: "))
 
     if(selection == 0):
+        # git pull
+        os.system("git pull")
+        input("Press ENTER to continue")
+
+    elif(selection == 1):
+        # make module
+        os.system("make")
+
+    elif(selection == 2):
         # install w/ default
         os.system("sudo insmod ../build/csc492.ko")
-    elif(selection == 1):
+
+    elif(selection == 3):
         # install w/ specifications
 
         # callbackIP
@@ -20,15 +34,20 @@ while True:
             # content not entered, set to default
             callbackIP = "127.0.0.1"
         
+        # run the actual insmod command
         os.system("sudo insmod ../build/csc492.ko callbackIP={0}".format(callbackIP))
 
-    elif(selection == 2):
+    elif(selection == 4):
         # check module log
         os.system("sudo less +G /var/log/kern.log")
 
-    elif(selection == 3):
+    elif(selection == 5):
         # uninstall module
         os.system("sudo rmmod csc492")
+        
+    elif(selection == 6):
+        # clean
+        os.system("make clean")
 
     elif(selection == -1):
         exit(0)
