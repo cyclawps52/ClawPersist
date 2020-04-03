@@ -11,7 +11,7 @@ all:
 	rm .main.o.cmd
 
 	# move all pieces to build folder
-	mv main.ko ../build/492.module
+	mv main.ko ../build/492.ko
 	mv main.mod.c ../build
 	mv main.mod.o ../build
 	mv main.o ../build
