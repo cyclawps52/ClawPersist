@@ -1,22 +1,21 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <sys/stat.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev6");
+MODULE_VERSION("beta-rev7");
 
 
 // parameter callbackIP
 static char *callbackIP = "127.0.0.1"; 
-module_param(callbackIP, charp, S_IRUSR|S_IWUSR|S_IXUSR);
+module_param(callbackIP, charp, S_IRUGO);
 MODULE_PARM_DESC(callbackIP, "Currently a placeholder for a future callback IP");
 
 // parameter testInt
-static int testInt = 0;
-module_param(testInt, int, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IWGRP|S_IXGRP|S_IROTH|S_IWOTH|S_IXOTH);
+static int testInt = 52;
+module_param(testInt, int, S_IRUGO|S_IWUSR);
 MODULE_PARM_DESC(testInt, "a dummy integer used for testing file permissions");
 
 // parameter testArray
