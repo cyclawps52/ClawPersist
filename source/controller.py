@@ -51,8 +51,8 @@ while True:
     elif(selection == -1):
         exit(0)
 
-    print("--------------------------------------------")
-    input("Press ENTER to continue")
-
     else:
         continue
+
+    print("--------------------------------------------")
+    input("Press ENTER to continue")
