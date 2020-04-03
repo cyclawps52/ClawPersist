@@ -1,4 +1,5 @@
 import os
+import sys
 
 while True:
     os.system("clear")
