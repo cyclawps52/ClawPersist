@@ -18,6 +18,7 @@ A red team assistive kernel module for linux-based systems created to satisfy th
     * First time I ran into the issue of attempting to import a user-space library into kernel-space. Took a while to figure out why that wouldn't work.
     * I have forgotten a lot more C and Python than I remember... was pretty eye opening.
     * I am really bad at updating module version numbers.
+    * If you have an array parameter, you can't overflow the array by passing more than your specified size in the code. DMA seems possible, but out of scope for the current project.
 
 ## Remaining Tasks
 
