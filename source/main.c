@@ -21,7 +21,7 @@ MODULE_PARM_DESC(testInt, "a dummy integer used for testing file permissions");
 // parameter testArray
 static int testArray[2] = {0};
 static int testArray_c = 0;
-module_param_array(testArray, int, &testArray_c, 0000);
+module_param_array(testArray, int, &testArray_c, 0644);
 MODULE_PARM_DESC(testArray, "a dummy array used for testing file permissions");
 
 int initModule(void){
