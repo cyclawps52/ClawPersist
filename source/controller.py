@@ -47,7 +47,7 @@ while True:
             testInt = str(52)
 
         # testArray
-        testArray = str(input("testArray:"))
+        testArray = str(input("testArray: "))
         if(testArray == ""):
             testArray = "{0}"
         
