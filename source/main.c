@@ -15,7 +15,7 @@ MODULE_PARM_DESC(callbackIP, "Currently a placeholder for a future callback IP")
 
 // parameter testInt
 static int testInt = 0;
-module_param(testInt, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+module_param(testInt, int, 0777);
 MODULE_PARM_DESC(testInt, "a dummy integer used for testing file permissions");
 
 // parameter testArray
