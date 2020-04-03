@@ -5,7 +5,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev4");
+MODULE_VERSION("beta-rev5");
 
 
 // parameter callbackIP
@@ -25,12 +25,13 @@ module_param_array(testArray, int, &testArray_c, 0000);
 MODULE_PARM_DESC(testArray, "a dummy array used for testing file permissions");
 
 int initModule(void){
+    int i = 0;
     printk(KERN_INFO "[CSC492] Hello world!\n");
     printk(KERN_INFO "[CSC492] DEBUG: Callback IP set to %s\n", callbackIP);
 
     // testing file permission and modification
     printk(KERN_INFO "[CSC492] DUMMY: testInt has a value of %d\n", testInt);
-    for(int i=0; i<testArray_c; i++){
+    for(i=0; i<testArray_c; i++){
         printk(KERN_INFO "[CSC492] DUMMY: testArray[%d] has value %d\n", i, testArray[i]);
     }
 
