@@ -7,7 +7,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("charlie-rev0");
+MODULE_VERSION("charlie-rev2");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -26,10 +26,10 @@ static int deviceOpenStatus = 0;
 static char msg[BUF_LEN];
 static char *msgPtr;
 static struct file_operations fops = {
-    .read = deviceRead;
-    .write = deviceWrite;
-    .open = deviceOpen;
-    .release = deviceRelease;
+    .read = deviceRead,
+    .write = deviceWrite,
+    .open = deviceOpen,
+    .release = deviceRelease
 } ;
 
 // parameter callbackIP
@@ -89,7 +89,7 @@ static int deviceOpen(struct inode* inode, struct file* file)
 
 	deviceOpenStatus++;
 	sprintf(msg, "Counter is now at %d\n", counter++);
-	msg_Ptr = msg;
+	msgPtr = msg;
 	try_module_get(THIS_MODULE);
 
 	return SUCCESS;
