@@ -117,7 +117,7 @@ static ssize_t deviceRead(struct file* filp, char* buffer, size_t length, loff_t
 
 static ssize_t deviceWrite(struct file* filp, const char* buff, size_t len, loff_t* off)
 {
-	printk(KERN_ALERT "[CSC492] INFO: Write to /dev/csc492dev detected but not supported\n");
+	printk(KERN_INFO "[CSC492] INFO: Write to /dev/csc492dev detected but not supported\n");
 	return -EINVAL;
 }
 
