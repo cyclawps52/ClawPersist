@@ -32,7 +32,7 @@ while True:
     elif(selection == 2):
         # install w/ default
         os.system("sudo insmod ../build/csc492.ko")
-        os.system("sudo mknod /dev/csc492dev c 0 $(cat /sys/module/csc492/parameters/majorNum)")
+        os.system("sudo mknod /dev/csc492dev c $(cat /sys/module/csc492/parameters/majorNum) 0")
 
     elif(selection == 3):
         # install w/ specifications
@@ -55,7 +55,7 @@ while True:
         
         # run the actual insmod command
         os.system("sudo insmod ../build/csc492.ko callbackIP={0} testInt={1} testArray={2}".format(callbackIP, str(testInt), testArray))
-        os.system("sudo mknod /dev/csc492dev c 0 $(cat /sys/module/csc492/parameters/majorNum)")
+        os.system("sudo mknod /dev/csc492dev c $(cat /sys/module/csc492/parameters/majorNum) 0")
 
     elif(selection == 4):
         # check module log
