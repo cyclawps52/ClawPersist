@@ -32,7 +32,7 @@ while True:
     elif(selection == 2):
         # install w/ default
         os.system("sudo insmod ../build/csc492.ko")
-        os.system("sudo mknod /dev/csc492dev c 0 $(cat /sys/modules/csc492/parameters/majorNum")
+        os.system("sudo mknod /dev/csc492dev c 0 $(cat /sys/modules/csc492/parameters/majorNum)")
 
     elif(selection == 3):
         # install w/ specifications
