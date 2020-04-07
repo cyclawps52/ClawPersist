@@ -7,7 +7,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("charlie-rev3");
+MODULE_VERSION("charlie-rev4");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -48,6 +48,11 @@ static int testArray_c = 0;
 module_param_array(testArray, int, &testArray_c, 0000);
 MODULE_PARM_DESC(testArray, "a dummy array used for testing file permissions");
 
+// parameter majorNum
+static int majorNum = 0;
+module_param(majorNum, int, S_IRUGO);
+MODULE_PARM_DESC(majorNum, "the assigned major number of character device csc492dev");
+
 int initModule(void){
     int i = 0;
     printk(KERN_INFO "[CSC492] Hello world!\n");
@@ -67,6 +72,7 @@ int initModule(void){
         return major;
     }
     printk(KERN_INFO "[CSC492] DEBUG: Assigned major number %d\n", major);
+	majorNum = major;
 
     return 0;
 }
