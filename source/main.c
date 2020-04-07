@@ -7,7 +7,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("charlie-rev2");
+MODULE_VERSION("charlie-rev3");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
