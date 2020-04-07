@@ -22,10 +22,10 @@ static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
 #define DEVICE_NAME "csc492dev"
 #define BUF_LEN 256
 static int major;
-static int deviceOpen = 0;
+static int deviceOpenStatus = 0;
 static char msg[BUF_LEN];
 static char *msgPtr;
-static struct fileOps fops = {
+static struct file_operations fops = {
     .read = deviceRead;
     .write = deviceWrite;
     .open = deviceOpen;
@@ -84,10 +84,10 @@ static int deviceOpen(struct inode* inode, struct file* file)
 {
 	static int counter = 0;
 
-	if (DeviceOpen)
+	if (deviceOpenStatus)
 		return -EBUSY;
 
-	DeviceOpen++;
+	deviceOpenStatus++;
 	sprintf(msg, "Counter is now at %d\n", counter++);
 	msg_Ptr = msg;
 	try_module_get(THIS_MODULE);
@@ -97,7 +97,7 @@ static int deviceOpen(struct inode* inode, struct file* file)
 
 static int deviceRelease(struct inode* inode, struct file* file)
 {
-	Device_Open--;		
+	deviceOpenStatus--;		
 	module_put(THIS_MODULE);
 	return 0;
 }
