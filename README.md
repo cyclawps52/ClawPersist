@@ -19,12 +19,26 @@ A red team assistive kernel module for linux-based systems created to satisfy th
     * I have forgotten a lot more C and Python than I remember... was pretty eye opening.
     * I am really bad at updating module version numbers.
     * If you have an array parameter, you can't overflow the array by passing more than your specified size in the code. DMA seems possible, but out of scope for the current project.
+* Creating the world-writable device
+    * version `charlie-rev0` to version `charlie-rev4`
+    * What I learend: I can just execute the code on a read which looks a lot less suspicious. Right now, the module increases a counter on each `cat` operation of the disk, which has been added to the python controller for convienence.
+    * Major numbers and minor numbers are not reversible, but linux will create the node just fine and blow up your system anyways. It's great.
+    * Static parameters are allowed to be modified by the module at runtime, allowing data exfil from kernelspace to userspace.
+    * `deviceWrite` operations in `fops` are depreciated in the latest linux kernel for security, but we can still do the read trick mentioned above and everything is fine.
+    * Literally every kernel/device read function looks the same and returns the number of bytes read into the buffer. I emulated this setup in my own deviceRead.
+    * I have more of my sanity left than I thought, this part wasn't too terribly bad to code :)
+* Interacting with the device via user land
+    * version `charlie-rev2` to `charlie-rev4`
+    * What I learned: Read operations are definitely the way to go instead of write.
+    * Even silent reads redirected to `/dev/null` increment the counter
+* Allowing the kernel module to respond to user land interactions
+    * version `charlie-rev2` to `charlie-rev4`
+    * What I learned: This is really simple as the kernel will auto report a read to the module that owns the device.
+    * Code does have to follow kernelspace limitations, but I think there's a workaround by dropping to `sh` directly to run the command as `id 0`.
+        * Doing more investigation on this as I want to figure out my options before starting the next part.
 
 ## Remaining Tasks
 
-* Creating the world-writable device
-* Interacting with the device via user land
-* Allowing the kernel module to respond to user land interactions
 * Running something in user land as root from kernel space
 * Opening a bind shell as root from kernel space
 * [Stretch] Wrapping all of this into a self-contained Metasploit module
