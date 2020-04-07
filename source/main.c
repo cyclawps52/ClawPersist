@@ -79,11 +79,11 @@ void exitModule(void){
 // cat /dev/csc492dev
 static int deviceOpen(struct inode* inode, struct file* file)
 {
-	static int counter = 0;
-
 	if (deviceOpenStatus)
 		return -EBUSY;
 
+	// this is the code to run on every cat of the device
+	static int counter = 0;
 	deviceOpenStatus++;
 	sprintf(msg, "Counter is now at %d\n", counter++);
 	msgPtr = msg;
