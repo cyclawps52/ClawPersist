@@ -10,6 +10,7 @@ while True:
     print("4. make checkLog")
     print("5. make uninstall")
     print("6. make clean")
+    print("7. cat /dev/csc492dev")
     print("-1. Exit controller")
     selection = int(input("Select an option: "))
 
@@ -31,6 +32,7 @@ while True:
     elif(selection == 2):
         # install w/ default
         os.system("sudo insmod ../build/csc492.ko")
+        os.system("sudo mknod /dev/csc492dev c 0 $(cat /sys/modules/csc492/parameters/majorNum")
 
     elif(selection == 3):
         # install w/ specifications
@@ -61,10 +63,15 @@ while True:
     elif(selection == 5):
         # uninstall module
         os.system("sudo rmmod csc492")
+        os.system("sudo rm /dev/csc492dev")
         
     elif(selection == 6):
         # clean
         os.system("make clean")
+
+    elif(selection == 7):
+        # cat /dev/csc492dev
+        os.system("sudo cat /dev/csc492dev")
 
     elif(selection == -1):
         exit(0)
