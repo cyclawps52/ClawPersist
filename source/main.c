@@ -72,10 +72,7 @@ int initModule(void){
 }
 
 void exitModule(void){
-    int unReg = unregister_chrdev(major, DEVICE_NAME);
-    if(unReg < 0){
-        printk(KERN_ALERT "[CSC492] ERROR: Unregistering character device failed with %d\n", unReg);
-    }
+    unregister_chrdev(major, DEVICE_NAME);
     printk(KERN_INFO "[CSC492] Goodbye world!\n");
 }
 
