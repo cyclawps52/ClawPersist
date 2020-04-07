@@ -1,12 +1,36 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/fs.h>
+#include <asm/uaccess.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("beta-rev8");
+MODULE_VERSION("charlie-rev0");
 
+// PROTOTYPES - MOVE TO .H FILE LATER
+int initModule(void);
+void exitModule(void);
+static int deviceOpen(struct inode*, struct file*);
+static int deviceRelease(struct inode*, struct file*);
+static ssize_t deviceRead(struct file*, char*, size_t, loff_t*);
+static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
+
+// for character device
+#define SUCCESS 0
+#define DEVICE_NAME "csc492dev"
+#define BUF_LEN 256
+static int major;
+static int deviceOpen = 0;
+static char msg[BUF_LEN];
+static char *msgPtr;
+static struct fileOps fops = {
+    .read = deviceRead;
+    .write = deviceWrite;
+    .open = deviceOpen;
+    .release = deviceRelease;
+} ;
 
 // parameter callbackIP
 static char *callbackIP = "127.0.0.1"; 
@@ -35,13 +59,70 @@ int initModule(void){
         printk(KERN_INFO "[CSC492] DUMMY: testArray[%d] has value %d\n", i, testArray[i]);
     }
 
+    // character device
+    major = register_chrdev(0, DEVICE_NAME, &fops);
+    if(major < 0){
+        printk(KERN_ALERT "[CSC492] ERROR: Registering character device failed with %d\n", major);
+        exitModule();
+        return major;
+    }
+    printk(KERN_INFO "[CSC492] DEBUG: Assigned major number %d\n", major);
+
     return 0;
 }
 
 void exitModule(void){
+    int unReg = unregister_chrdev(major, DEVICE_NAME);
+    if(unReg < 0){
+        printk(KERN_ALERT "[CSC492] ERROR: Unregistering character device failed with %d\n", unReg);
+    }
     printk(KERN_INFO "[CSC492] Goodbye world!\n");
 }
 
+// cat /dev/csc492dev
+static int deviceOpen(struct inode* inode, struct file* file)
+{
+	static int counter = 0;
+
+	if (DeviceOpen)
+		return -EBUSY;
+
+	DeviceOpen++;
+	sprintf(msg, "Counter is now at %d\n", counter++);
+	msg_Ptr = msg;
+	try_module_get(THIS_MODULE);
+
+	return SUCCESS;
+}
+
+static int deviceRelease(struct inode* inode, struct file* file)
+{
+	Device_Open--;		
+	module_put(THIS_MODULE);
+	return 0;
+}
+
+static ssize_t deviceRead(struct file* filp, char* buffer, size_t length, loff_t* offset)
+{
+	int bytesRead = 0;
+
+	if (*msgPtr == 0)
+		return 0;
+
+	while (length && *msgPtr) {
+		put_user(*(msgPtr++), buffer++);
+		length--;
+		bytesRead++;
+	}
+
+	return bytesRead;
+}
+
+static ssize_t deviceWrite(struct file* filp, const char* buff, size_t len, loff_t* off)
+{
+	printk(KERN_ALERT "[CSC492] INFO: Write to /dev/csc492dev detected but not supported\n");
+	return -EINVAL;
+}
 
 module_init(initModule);
 module_exit(exitModule);
