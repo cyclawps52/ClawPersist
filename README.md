@@ -36,10 +36,18 @@ A red team assistive kernel module for linux-based systems created to satisfy th
     * What I learned: This is really simple as the kernel will auto report a read to the module that owns the device.
     * Code does have to follow kernelspace limitations, but I think there's a workaround by dropping to `sh` directly to run the command as `id 0`.
         * Doing more investigation on this as I want to figure out my options before starting the next part.
+* Running something in user land as root from kernel space
+    * version `delta-rev0`
+    * What I learned: This is stupidly easy if you read the documentation from IBM [located here](https://developer.ibm.com/technologies/linux/articles/l-user-space-apps/)
+    * Pointers are gross.
+    * REALLY gross.
+    * So many flow charts drawn in this process. 
+* Opening a bind shell as root from kernel space
+    * version `delta-rev1` to `delta-rev7`
+    * What I learned: I overcomplicated everything and can just run the bash command in one chunk.
+    * I'm using the typical pipe passed to netcat approach. This assumes `nc` is on the system (which is on ubuntu by default).
 
 ## Remaining Tasks
 
-* Running something in user land as root from kernel space
-* Opening a bind shell as root from kernel space
 * [Stretch] Wrapping all of this into a self-contained Metasploit module
 * [Stretch] Creating a persistent Cobalt Strike C2 beacon from kernel space
