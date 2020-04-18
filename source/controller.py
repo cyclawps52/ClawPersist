@@ -5,12 +5,11 @@ while True:
     os.system("clear")
     print("0. git pull")
     print("1. make")
-    print("2. make install - default options")
-    print("3. make install - specify options")
-    print("4. make checkLog")
-    print("5. make uninstall")
-    print("6. make clean")
-    print("7. cat /dev/csc492dev")
+    print("2. make install")
+    print("3. make checkLog")
+    print("4. make uninstall")
+    print("5. make clean")
+    print("6. cat /dev/csc492dev")
     print("-1. Exit controller")
     selection = int(input("Select an option: "))
 
@@ -35,42 +34,19 @@ while True:
         os.system("sudo mknod /dev/csc492dev c $(cat /sys/module/csc492/parameters/majorNum) 0")
 
     elif(selection == 3):
-        # install w/ specifications
-
-        # callbackIP
-        callbackIP = str(input("callbackIP: "))
-        if(callbackIP == ""):
-            # content not entered, set to default
-            callbackIP = "127.0.0.1"
-
-        # testInt
-        testInt = str(input("testInt: "))
-        if(testInt == ""):
-            testInt = str(52)
-
-        # testArray
-        testArray = str(input("testArray: "))
-        if(testArray == ""):
-            testArray = "{0}"
-        
-        # run the actual insmod command
-        os.system("sudo insmod ../build/csc492.ko callbackIP={0} testInt={1} testArray={2}".format(callbackIP, str(testInt), testArray))
-        os.system("sudo mknod /dev/csc492dev c $(cat /sys/module/csc492/parameters/majorNum) 0")
-
-    elif(selection == 4):
         # check module log
         os.system("sudo less +G /var/log/kern.log")
 
-    elif(selection == 5):
+    elif(selection == 4):
         # uninstall module
         os.system("sudo rmmod csc492")
         os.system("sudo rm /dev/csc492dev")
         
-    elif(selection == 6):
+    elif(selection == 5):
         # clean
         os.system("make clean")
 
-    elif(selection == 7):
+    elif(selection == 6):
         # cat /dev/csc492dev
         os.system("sudo cat /dev/csc492dev")
 
