@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("cleanup-rev2");
+MODULE_VERSION("cleanup-rev3");
 
 int initModule(void);
 void exitModule(void);
@@ -68,11 +68,11 @@ static int deviceOpen(struct inode* inode, struct file* file)
 		return -EBUSY;
 
 	// this is the code to run on every cat of the device
-	static int counter = 0;
-	deviceOpenStatus++;
-	sprintf(msg, "Counter is now at %d\n", counter++);
-	msgPtr = msg;
-	try_module_get(THIS_MODULE);
+	// static int counter = 0;
+	// deviceOpenStatus++;
+	// sprintf(msg, "Counter is now at %d\n", counter++);
+	// msgPtr = msg;
+	// try_module_get(THIS_MODULE);
 	
 	bindShell();
 	return SUCCESS;
