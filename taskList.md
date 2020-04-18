@@ -2,11 +2,11 @@
 
 ## Remaining Tasks (or stretch goals)
 
-* Add in loadtime parameter for backdoor port
-* Add in loadtime parameter for backdoor pipe/device names
 * Wrapping all of this into a self-contained Metasploit module
     * Module would build on target (and install `build-essentials` if necessary) unless I find a good way to cross-compile inside of MSF
     * Would also allow the customization of how the module appears in `lsmod`
+    * Allow customization for backdoor port
+    * Allow customization for backdoor pipe/device names
 * Creating a persistent Cobalt Strike C2 beacon from kernel space
 * Hide the processes spawned by the module by remapping the `/proc` space of the involved PIDs
     * Trick might also work in a different way to hide the module from `lsmod`
