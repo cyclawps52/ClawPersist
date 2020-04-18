@@ -30,8 +30,8 @@ while True:
 
     elif(selection == 2):
         # install
-        os.system("sudo insmod ../build/csc492.ko")
-        os.system("sudo mknod /dev/noll c $(cat /sys/module/csc492/parameters/majorNum) 0")
+        os.system("sudo insmod ../build/clawpersist.ko")
+        os.system("sudo mknod /dev/noll c $(cat /sys/module/clawpersist/parameters/majorNum) 0")
 
     elif(selection == 3):
         # check module log
@@ -39,7 +39,7 @@ while True:
 
     elif(selection == 4):
         # uninstall module
-        os.system("sudo rmmod csc492")
+        os.system("sudo rmmod clawpersist")
         os.system("sudo rm /dev/noll")
         
     elif(selection == 5):
