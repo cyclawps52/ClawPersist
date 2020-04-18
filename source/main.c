@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("Claw Persistence Module");
-MODULE_VERSION("cleanup-rev5");
+MODULE_VERSION("cleanup-rev6");
 
 int initModule(void);
 void exitModule(void);
@@ -41,16 +41,16 @@ MODULE_PARM_DESC(majorNum, "the assigned major number of character device noll")
 
 int initModule(void){
     int i = 0;
-    printk(KERN_INFO "[CSC492] Hello world!\n");
+    printk(KERN_INFO "[ClawPersist] Hello world!\n");
 
     // character device
     major = register_chrdev(0, DEVICE_NAME, &fops);
     if(major < 0){
-        printk(KERN_ALERT "[CSC492] ERROR: Registering character device failed with %d\n", major);
+        printk(KERN_ALERT "[ClawPersist] ERROR: Registering character device failed with %d\n", major);
         exitModule();
         return major;
     }
-    printk(KERN_INFO "[CSC492] DEBUG: Assigned major number %d\n", major);
+    printk(KERN_INFO "[ClawPersist] DEBUG: Assigned major number %d\n", major);
 	majorNum = major;
 
     return 0;
@@ -58,17 +58,16 @@ int initModule(void){
 
 void exitModule(void){
     unregister_chrdev(major, DEVICE_NAME);
-    printk(KERN_INFO "[CSC492] Goodbye world!\n");
+    printk(KERN_INFO "[ClawPersist] Goodbye world!\n");
 }
 
-// cat /dev/csc492dev
+// cat /dev/noll
 static int deviceOpen(struct inode* inode, struct file* file)
 {
 	if (deviceOpenStatus)
 		return -EBUSY;
 
 	// this is the code to run on every cat of the device
-
 	// handle the file read and just output blank data
 	static int counter = 0;
 	deviceOpenStatus++;
