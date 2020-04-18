@@ -31,7 +31,6 @@ while True:
     elif(selection == 2):
         # install
         os.system("sudo insmod ../build/clawpersist.ko")
-        os.system("sudo mknod /dev/noll c $(cat /sys/module/clawpersist/parameters/majorNum) 0")
 
     elif(selection == 3):
         # check module log
