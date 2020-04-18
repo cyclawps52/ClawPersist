@@ -3,7 +3,7 @@ _A red team assistive kernel module for linux-based systems created to satisfy t
 
 ## What is this?
 
-This was an idea I had to fufill the requirements of the CSC492 Advanced Linux topics class at DSU. In short, during our mock CCDC competitions we normally have root access at minute zero with default credentials. The idea was to put in a backdoor that lies in kernelspace waiting for activation. This module creates a world-readable device and monitors read activity on said device. Any read of the device (can be done by a simple `cat` command) will trigger a backdoor `nc` bind shell on port 1337. So even if you get locked out of root, as long as you can code exec somewhere (whether that's from a low-level user or from a code injection vuln on a website), you can spawn that 1337 shell.
+This was an idea I had to fufill the requirements of the CSC492 Advanced Linux topics class at DSU. I hadn't really worked with writing kernel modules and was barely used to the idea of separate kernel and user space so I wanted to deep dive into something related to that topic. In short, during our mock CCDC competitions we normally have root access at minute zero with default credentials. The idea was to put in a backdoor that lies in kernelspace waiting for activation. This module creates a world-readable device and monitors read activity on said device. Any read of the device (can be done by a simple `cat` command) will trigger a backdoor `nc` bind shell on port 1337. So even if you get locked out of root, as long as you can code exec somewhere (whether that's from a low-level user or from a code injection vuln on a website), you can spawn that 1337 shell.
 
 There are a few important notes about this module:
 
