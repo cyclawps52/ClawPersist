@@ -11,6 +11,10 @@ There are a few important notes about this module:
 * The initial PoC will not persist on a reboot. If I ever get around to writing the metasploit module to go with this, I would make sure the module is ran at reboot as well by utilizing the `/etc/modules` utility.
 * The initial PoC is still very noisy. It outputs some debug stuff to the kernel log on load, runtime, and exit. Additionally the spawned shell is very noticable, the idea is that this bind shell would be used to spawn stealthier ways of access.
 
+## Future plans
+
+There is still more I'd like to achieve with this project. More details can be found on the [tastlisk page](https://github.com/cyclawps52/ClawPersist/blob/master/taskList.md) along with some notes taken during the development of my initial PoC.
+
 ## Show me!
 
 I have recorded a short `asciinema` demo of how the PoC (IE: `release-1`) works.
