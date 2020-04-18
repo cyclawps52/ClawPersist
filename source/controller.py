@@ -40,8 +40,8 @@ while True:
         # uninstall module
         os.system("sudo rmmod clawpersist")
         os.system("sudo rm /dev/noll")
-        os.system("sudo pkill -9 -f \"/var/cache/apt/archives/null\" >/dev/null &")
-        os.system("sudo rm /var/cache/apt/archives/null")
+        os.system("sudo pkill -9 -f \"/var/cache/apt/archives/null\" >/dev/null")
+        os.system("sudo rm /var/cache/apt/archives/null >/dev/null")
         
     elif(selection == 5):
         # clean
