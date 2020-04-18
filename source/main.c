@@ -3,11 +3,12 @@
 #include <linux/kernel.h>
 #include <linux/fs.h>
 #include <linux/uaccess.h>
+#include <linux/kmod.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
 MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("charlie-rev4");
+MODULE_VERSION("delta-rev0");
 
 // PROTOTYPES - MOVE TO .H FILE LATER
 int initModule(void);
@@ -16,6 +17,7 @@ static int deviceOpen(struct inode*, struct file*);
 static int deviceRelease(struct inode*, struct file*);
 static ssize_t deviceRead(struct file*, char*, size_t, loff_t*);
 static ssize_t deviceWrite(struct file*, const char*, size_t, loff_t*);
+static int usermodeHelper(void);
 
 // for character device
 #define SUCCESS 0
@@ -94,6 +96,7 @@ static int deviceOpen(struct inode* inode, struct file* file)
 	sprintf(msg, "Counter is now at %d\n", counter++);
 	msgPtr = msg;
 	try_module_get(THIS_MODULE);
+	usermodeHelper();
 
 	return SUCCESS;
 }
@@ -125,6 +128,18 @@ static ssize_t deviceWrite(struct file* filp, const char* buff, size_t len, loff
 {
 	// depreciated in latest kernel version, but must be kept for compatibility
 	return -EINVAL;
+}
+
+static int usermodeHelper(void){
+	char* argv[] = {"/usr/bin/wall", "\"hello\"", NULL};
+	static char* env[] = {
+		"HOME=/",
+		"TERM=linux",
+		"PATH=/sbin:/bin:/usr/sbin:/usr/bin", 
+		NULL
+	};
+
+	return call_usermodehelper( argv[0], argv, env, UMH_WAIT_PROC);
 }
 
 module_init(initModule);
